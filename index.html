@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Learn VUE</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     </head>
     
@@ -15,20 +16,32 @@
                         <h6 class="card-subtitle mb-2 text-muted">Find the relation between you and your partner</h6>
                         <div class="row">
                             <div class="col-12">
-                                <div>
+                                <div v-if="result.name == ''">
                                     <div class="mb-3">
                                         <label>Enter your name</label>
-                                        <input v-model="firstName" class="form-control form-control-sm" type="text" name="firstName">
+                                        <input v-model="firstName" class="form-control form-control-sm" 
+                                        :class="error.firstName ? 'border-danger' : ''"
+                                        placeholder="Please provide your name"
+                                        type="text" name="firstName">
+                                        <span v-if="error.firstName" class="text-danger text-sm">* This field is required</span>
                                     </div>
                                     <div class="mb-3">
                                         <label>Enter your partner name</label>
-                                        <input v-model="secondName" class="form-control form-control-sm" type="text" name="firstName">
+                                        <input v-model="secondName" class="form-control form-control-sm"
+                                        :class="error.secondName ? 'border-danger' : ''"
+                                        placeholder="Please provide your partner name"
+                                        type="text" name="firstName">
+                                        <span v-if="error.secondName" class="text-danger text-sm">* This field is required</span>
                                     </div>
                                 </div>
-                                <div class="text-center">
+                                <div v-else class="text-center">
                                     <div>Hi, <b>{{ firstName }}</b></div>
                                     <div >The Relationship between you and <b>{{ secondName }}</b> is </div>
-                                    <h3 >{{ result }}</h3>
+                                    
+                                    <div>
+                                        <i class="mt-2" :class="result.icon"></i>
+                                    </div>
+                                    <h3 >{{ result.name }}</h3>
                                 </div>
                                 <div>
                                     <button class="btn btn-primary" @click="resetData">Clear</button>
